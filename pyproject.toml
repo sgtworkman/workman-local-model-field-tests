@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "workman-local-model-field-tests"
+version = "0.1.0"
+description = "Reproducible local-model field tests for DGX Spark, Apple Silicon, and OpenAI-compatible runtimes."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Glen Workman"}]
+keywords = ["llm", "benchmark", "dgx-spark", "llama-cpp", "vllm", "local-ai"]
+
+[project.scripts]
+workman-field-test = "workman_field_tests.cli:main"
+workman-field-compare = "workman_field_tests.compare:main"
+workman-field-sanitize = "workman_field_tests.sanitize:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

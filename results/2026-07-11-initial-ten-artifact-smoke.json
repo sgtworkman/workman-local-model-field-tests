@@ -1,0 +1,19 @@
+{
+  "schema_version": "workman-published-smoke.v1",
+  "created_utc": "2026-07-11T09:00:00Z",
+  "scope": "Initial common smoke across seven Studio artifacts and three DGX NVFP4 artifacts. Do not mix these scores with the deeper normalized battery.",
+  "studio": [
+    {"model": "Existing Qwen3.6 35B-A3B", "checks": "6/6", "generation_tokens_per_second": 44.32},
+    {"model": "Unsloth Qwen3.6 35B-A3B GGUF", "checks": "6/6", "generation_tokens_per_second": 43.09},
+    {"model": "Unsloth Qwen3-Coder-Next GGUF", "checks": "6/6", "generation_tokens_per_second": 38.22},
+    {"model": "Unsloth Qwen3.6 27B GGUF", "checks": "6/6", "generation_tokens_per_second": 22.79},
+    {"model": "Existing Qwen3-Coder 30B", "checks": "5/6", "generation_tokens_per_second": 57.43},
+    {"model": "Unsloth Gemma 4 12B GGUF", "checks": "5/6", "generation_tokens_per_second": 41.53},
+    {"model": "Existing Gemma 4 12B", "checks": "4/6", "generation_tokens_per_second": 39.45}
+  ],
+  "dgx_spark": [
+    {"model": "Unsloth Qwen3.6 35B-A3B NVFP4-Fast", "checks": "6/6", "generation_tokens_per_second": 80.13},
+    {"model": "Unsloth Qwen3.6 35B-A3B NVFP4", "checks": "6/6", "generation_tokens_per_second": 76.98},
+    {"model": "Unsloth Qwen3.6 27B NVFP4", "checks": "5/6", "generation_tokens_per_second": 17.55}
+  ]
+}

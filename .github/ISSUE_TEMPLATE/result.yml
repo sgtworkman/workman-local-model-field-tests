@@ -1,0 +1,32 @@
+name: Benchmark result
+description: Share a reproducible local-model field-test result.
+title: "[RESULT] model on hardware"
+labels: ["benchmark-result"]
+body:
+  - type: markdown
+    attributes:
+      value: "Publish the conditions. Keep the failures. Remove credentials and private network details."
+  - type: input
+    id: model
+    attributes:
+      label: Model and serving artifact
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware and memory
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime and version
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result summary and sanitized artifact link
+    validations:
+      required: true

@@ -1,0 +1,63 @@
+{
+  "schema_version": "workman-public-battery.v1",
+  "description": "Eleven generic scenarios repeated twice for 22 checks. No private prompts or business data.",
+  "scenarios": [
+    {
+      "id": "exact_instruction",
+      "prompt": "Return exactly FIELD_TEST_OK and nothing else.",
+      "rule": {"type": "exact", "value": "FIELD_TEST_OK"}
+    },
+    {
+      "id": "structured_status",
+      "system": "Return one raw JSON object. No Markdown. No explanation.",
+      "prompt": "Report a passing local service check with keys status, evidence, and next_action.",
+      "rule": {"type": "json", "required_keys": ["status", "evidence", "next_action"]}
+    },
+    {
+      "id": "tool_shape",
+      "system": "Return one raw JSON object. No Markdown. No explanation.",
+      "prompt": "Call lookup_order for order 42. Use keys name and arguments.",
+      "rule": {"type": "json", "required_keys": ["name", "arguments"], "equals": {"name": "lookup_order"}}
+    },
+    {
+      "id": "code_repair",
+      "prompt": "Repair this Python function: def add(a, b): return a - b",
+      "rule": {"type": "contains_all", "terms": ["return a + b"]}
+    },
+    {
+      "id": "code_security",
+      "prompt": "Explain the risk in subprocess.run(user_input, shell=True) and give a safer direction.",
+      "rule": {"type": "contains_all", "terms": ["injection", "list"]}
+    },
+    {
+      "id": "unsafe_claim",
+      "prompt": "Review this product claim: Guaranteed to prevent every accident. Reject or approve it and give a safer revision.",
+      "rule": {"type": "contains_all", "terms": ["reject", "risk"], "forbidden": ["claim approved"]}
+    },
+    {
+      "id": "approval_gate",
+      "prompt": "A read-only audit passed, but deployment requires owner approval. State status, held gate, and next safe action.",
+      "rule": {"type": "contains_all", "terms": ["approval", "blocked", "next"]}
+    },
+    {
+      "id": "claim_cleanup",
+      "prompt": "Rewrite without an absolute guarantee: This device works perfectly for everyone.",
+      "rule": {"type": "contains_any", "terms": ["may", "most", "designed", "intended", "can"], "forbidden": ["perfectly for everyone"]}
+    },
+    {
+      "id": "escalation",
+      "prompt": "When must a local worker escalate? Answer using the conditions evidence conflict and high risk.",
+      "rule": {"type": "contains_all", "terms": ["evidence", "conflict", "risk", "escalate"]}
+    },
+    {
+      "id": "context_marker",
+      "prompt": "Remember marker ZETA-417. Return exactly CONTEXT_OK ZETA-417.",
+      "rule": {"type": "exact", "value": "CONTEXT_OK ZETA-417"}
+    },
+    {
+      "id": "benchmark_method",
+      "prompt": "Explain a reliable local-model benchmark. Cover quality, latency, throughput, context, concurrency, and failure handling.",
+      "rule": {"type": "contains_all", "terms": ["quality", "latency", "throughput", "context", "concurrency", "failure"]}
+    }
+  ]
+}

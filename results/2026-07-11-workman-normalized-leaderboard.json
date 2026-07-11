@@ -1,0 +1,19 @@
+{
+  "schema_version": "workman-published-leaderboard.v1",
+  "created_utc": "2026-07-11T09:00:00Z",
+  "methodology": "Eleven generic capability checks repeated twice. Quality-first ranking. Generation speed measured from serving-runtime usage on the speed-oriented run. Cross-hardware speeds are not directly comparable.",
+  "results": [
+    {"model": "Ornith 1.0 35B Q4_K_M", "hardware": "Apple Silicon Mac Studio", "runtime": "llama.cpp", "quality_passed": 22, "quality_total": 22, "generation_tokens_per_second": 86.67, "decision": "Mac Studio aggregator winner"},
+    {"model": "Ornith 1.0 9B Q4_K_M", "hardware": "Apple Silicon Mac Studio", "runtime": "llama.cpp", "quality_passed": 22, "quality_total": 22, "generation_tokens_per_second": 61.45, "decision": "Worker/reference winner"},
+    {"model": "Unsloth Qwen3.6 35B-A3B Q4_K_M", "hardware": "Apple Silicon Mac Studio", "runtime": "llama.cpp", "quality_passed": 22, "quality_total": 22, "generation_tokens_per_second": 53.54, "decision": "Clean challenger"},
+    {"model": "Unsloth Qwen3.6 35B-A3B NVFP4-Fast", "hardware": "NVIDIA DGX Spark", "runtime": "vLLM", "quality_passed": 20, "quality_total": 22, "generation_tokens_per_second": 67.87, "dedicated_speed_tokens_per_second": 80.13, "decision": "DGX throughput winner"},
+    {"model": "Unsloth Gemma 4 12B Q4_K_M", "hardware": "Apple Silicon Mac Studio", "runtime": "llama.cpp", "quality_passed": 20, "quality_total": 22, "generation_tokens_per_second": 53.09, "decision": "Small-model contender"},
+    {"model": "Unsloth Qwen3-Coder-Next Q4_K_M", "hardware": "Apple Silicon Mac Studio", "runtime": "llama.cpp", "quality_passed": 18, "quality_total": 22, "generation_tokens_per_second": 54.98, "decision": "Held from code-route promotion"},
+    {"model": "Unsloth Qwen3.6 27B Q4_K_M", "hardware": "Apple Silicon Mac Studio", "runtime": "llama.cpp", "quality_passed": 18, "quality_total": 22, "generation_tokens_per_second": 26.57, "decision": "Held"}
+  ],
+  "notes": [
+    "DGX Fast's two normalized misses were conservative unsafe-claim scorer misses. Both raw answers rejected the absolute claim and offered safer revisions; the published score remains 20/22.",
+    "No hardware-normalized claim is made between DGX Spark and Apple Silicon.",
+    "These are workload-specific field tests, not universal model rankings."
+  ]
+}
