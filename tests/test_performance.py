@@ -39,18 +39,28 @@ class StreamingHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/event-stream")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        for event in events:
-            self.wfile.write(event.encode())
-            self.wfile.flush()
-            time.sleep(0.005)
+        try:
+            for event in events:
+                self.wfile.write(event.encode())
+                self.wfile.flush()
+                time.sleep(0.005)
+        except (BrokenPipeError, ConnectionResetError):
+            # Expected when the timeout fixture closes its client connection.
+            pass
 
     def log_message(self, *_):
         pass
 
 
+class LoadTestHTTPServer(ThreadingHTTPServer):
+    # The stdlib default backlog is only 5, which can reject connections during
+    # the intentional 24-request burst before worker threads accept them.
+    request_queue_size = 64
+
+
 class PerformanceTests(unittest.TestCase):
     def setUp(self):
-        self.server = ThreadingHTTPServer(("127.0.0.1", 0), StreamingHandler)
+        self.server = LoadTestHTTPServer(("127.0.0.1", 0), StreamingHandler)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.endpoint = Endpoint(f"http://127.0.0.1:{self.server.server_port}/v1", "", "fixture")
