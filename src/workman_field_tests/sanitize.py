@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .privacy import is_sensitive_key, redact_text, scan_text
+from .io import atomic_write_json
 
 
 def sanitize(value: Any, path: str = "$") -> Any:
@@ -48,8 +49,7 @@ def main() -> int:
     remaining = scan(clean)
     if remaining:
         raise SystemExit("sanitized result still contains sensitive patterns: " + ", ".join(remaining))
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(clean, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    atomic_write_json(args.output, clean)
     print(json.dumps({"status": "PASS", "output": str(args.output)}, sort_keys=True))
     return 0
 

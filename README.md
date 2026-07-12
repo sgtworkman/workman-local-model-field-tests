@@ -63,6 +63,8 @@ workman-field-test \
 
 The runner does not write the endpoint URL or API key into the result.
 
+Every completed scenario/repeat is checkpointed with an atomic file replacement. Add `--resume` to continue an interrupted run from completed stable identities; a checkpoint from a different model is rejected.
+
 To create an admission-ready v2 artifact, add `--admission-ready` plus the exact model revision, runtime version, hardware memory, context limit, and OS metadata. Validate it before submission:
 
 ```bash

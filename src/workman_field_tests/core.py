@@ -186,11 +186,22 @@ def run_battery(
     quantization: str,
     no_think: bool,
     provenance: dict[str, Any] | None = None,
+    initial_rows: list[dict[str, Any]] | None = None,
+    checkpoint: Callable[[list[dict[str, Any]]], None] | None = None,
     progress: Callable[[str], None] | None = None,
 ) -> dict[str, Any]:
-    rows: list[dict[str, Any]] = []
+    rows: list[dict[str, Any]] = list(initial_rows or [])
+    completed = {
+        (row.get("scenario_id"), row.get("repeat"))
+        for row in rows
+        if row.get("scenario_id") and row.get("repeat") is not None
+    }
     for scenario in scenarios:
         for repeat in range(1, repeats + 1):
+            if (scenario["id"], repeat) in completed:
+                if progress:
+                    progress(f"SKIP {scenario['id']} repeat={repeat} reason=resume")
+                continue
             if progress:
                 progress(f"START {scenario['id']} repeat={repeat}")
             payload: dict[str, Any] = {
@@ -247,6 +258,8 @@ def run_battery(
                     "hidden_reasoning_present": False,
                 }
             rows.append(row)
+            if checkpoint:
+                checkpoint(rows)
             if progress:
                 progress(
                     f"DONE {scenario['id']} repeat={repeat} passed={row['passed']} "

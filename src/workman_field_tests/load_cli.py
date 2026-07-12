@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from .core import Endpoint
+from .io import atomic_write_json
 from .performance import run_concurrency_sweep
 
 
@@ -45,8 +46,7 @@ def main() -> int:
         request_rate=args.request_rate,
         progress=lambda message: print(message, file=sys.stderr, flush=True),
     )
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    atomic_write_json(args.output, result)
     summary = [
         {
             "concurrency": run["concurrency"],

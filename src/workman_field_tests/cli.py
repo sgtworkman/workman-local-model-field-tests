@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 from .core import Endpoint, load_scenarios, run_battery
+from .io import atomic_write_json
 
 
 def exit_code_for_summary(summary: dict, min_pass_rate: float) -> int:
@@ -44,6 +45,7 @@ def parser() -> argparse.ArgumentParser:
     p.add_argument("--os", dest="os_name")
     p.add_argument("--context-limit", type=int)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--resume", action="store_true", help="Resume completed scenario/repeat rows from the output checkpoint.")
     return p
 
 
@@ -80,6 +82,25 @@ def main() -> int:
             "context_limit": args.context_limit,
             "seed": args.seed,
         }
+    initial_rows = []
+    if args.resume and args.output.is_file():
+        existing = json.loads(args.output.read_text(encoding="utf-8"))
+        if existing.get("model") != args.model:
+            raise SystemExit("resume checkpoint model does not match --model")
+        initial_rows = existing.get("rows") or []
+
+    def checkpoint(rows: list[dict]) -> None:
+        atomic_write_json(
+            args.output,
+            {
+                "schema_version": "workman-field-tests.checkpoint.v1",
+                "status": "IN_PROGRESS",
+                "model": args.model,
+                "endpoint_label": args.endpoint_label,
+                "rows": rows,
+            },
+        )
+
     result = run_battery(
         endpoint=Endpoint(args.base_url, args.api_key, args.endpoint_label),
         model=args.model,
@@ -92,10 +113,11 @@ def main() -> int:
         quantization=args.quantization,
         no_think=args.no_think,
         provenance=provenance,
+        initial_rows=initial_rows,
+        checkpoint=checkpoint,
         progress=lambda message: print(message, file=sys.stderr, flush=True),
     )
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    atomic_write_json(args.output, result)
     print(json.dumps(result["summary"], sort_keys=True))
     return exit_code_for_summary(result["summary"], args.min_pass_rate)
 

@@ -6,6 +6,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from workman_field_tests.core import Endpoint, run_battery
+from workman_field_tests.io import atomic_write_json
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -84,6 +85,43 @@ class IntegrationTests(unittest.TestCase):
         self.assertNotIn("reasoning_effort", request)
         self.assertNotIn("include_reasoning", request)
         self.assertNotIn("chat_template_kwargs", request)
+
+    def test_resume_skips_completed_stable_identity(self):
+        Handler.requests = []
+        initial = [{
+            "scenario_id": "exact",
+            "repeat": 1,
+            "elapsed_seconds": 0.1,
+            "completion_tokens": 3,
+            "request_tokens_per_second": 30.0,
+            "passed": True,
+            "failures": [],
+            "output": "FIELD_TEST_OK",
+        }]
+        result = run_battery(
+            endpoint=Endpoint("http://127.0.0.1:1/v1", "", "test"),
+            model="fixture",
+            scenarios=[{"id": "exact", "prompt": "Return FIELD_TEST_OK", "rule": {"type": "exact", "value": "FIELD_TEST_OK"}}],
+            repeats=1,
+            timeout=1,
+            max_tokens=10,
+            hardware="fixture",
+            runtime="fixture",
+            quantization="fixture",
+            no_think=False,
+            initial_rows=initial,
+        )
+        self.assertEqual(result["summary"]["passed"], 1)
+        self.assertEqual(len(result["rows"]), 1)
+        self.assertEqual(Handler.requests, [])
+
+    def test_atomic_json_write_replaces_complete_file(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "result.json"
+            atomic_write_json(path, {"status": "first"})
+            atomic_write_json(path, {"status": "second"})
+            self.assertEqual(json.loads(path.read_text(encoding="utf-8")), {"status": "second"})
+            self.assertEqual(list(Path(temp).glob("*.tmp")), [])
 
 
 if __name__ == "__main__":
