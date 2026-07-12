@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import statistics
 import time
 import urllib.error
@@ -9,6 +10,8 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
+
+from .privacy import redact_text
 
 
 NO_THINK_CONTROLS = {
@@ -42,7 +45,7 @@ def load_scenarios(path: Path) -> list[dict[str, Any]]:
     return scenarios
 
 
-def extract_text(response: dict[str, Any]) -> tuple[str, bool]:
+def extract_response(response: dict[str, Any]) -> tuple[str, bool, str]:
     choices = response.get("choices") or []
     message = (choices[0].get("message") or {}) if choices else {}
     content = message.get("content")
@@ -51,8 +54,28 @@ def extract_text(response: dict[str, Any]) -> tuple[str, bool]:
             str(part.get("text", "")) if isinstance(part, dict) else str(part)
             for part in content
         )
-    hidden = bool(message.get("reasoning") or message.get("thinking"))
-    return str(content or ""), hidden
+    hidden = bool(
+        message.get("reasoning")
+        or message.get("thinking")
+        or message.get("reasoning_content")
+    )
+    tool_calls = message.get("tool_calls") or []
+    if not content and tool_calls:
+        function = (tool_calls[0].get("function") or {}) if isinstance(tool_calls[0], dict) else {}
+        arguments = function.get("arguments", {})
+        if isinstance(arguments, str):
+            try:
+                arguments = json.loads(arguments)
+            except json.JSONDecodeError:
+                pass
+        content = json.dumps({"name": function.get("name"), "arguments": arguments})
+        return str(content), hidden, "native_tool_call"
+    return str(content or ""), hidden, "content"
+
+
+def extract_text(response: dict[str, Any]) -> tuple[str, bool]:
+    text, hidden, _ = extract_response(response)
+    return text, hidden
 
 
 def post_chat(endpoint: Endpoint, payload: dict[str, Any], timeout: float) -> tuple[dict[str, Any], float]:
@@ -71,10 +94,15 @@ def post_chat(endpoint: Endpoint, payload: dict[str, Any], timeout: float) -> tu
         with urllib.request.urlopen(request, timeout=timeout) as response:
             body = json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
-        detail = exc.read(2048).decode("utf-8", errors="replace")
+        detail = redact_text(exc.read(2048).decode("utf-8", errors="replace"))
         raise RuntimeError(f"HTTP {exc.code}: {detail}") from exc
     elapsed = time.perf_counter() - started
     return body, elapsed
+
+
+def contains_term(text: str, term: object) -> bool:
+    escaped = re.escape(str(term))
+    return bool(re.search(rf"(?<!\w){escaped}(?!\w)", text, flags=re.I))
 
 
 def evaluate(text: str, hidden_reasoning: bool, rule: dict[str, Any]) -> tuple[bool, list[str]]:
@@ -91,12 +119,23 @@ def evaluate(text: str, hidden_reasoning: bool, rule: dict[str, Any]) -> tuple[b
             failures.append("exact_mismatch")
     elif kind == "contains_all":
         for term in rule.get("terms", []):
-            if str(term).lower() not in lower:
+            if not contains_term(normalized, term):
                 failures.append(f"missing:{term}")
     elif kind == "contains_any":
         terms = [str(term) for term in rule.get("terms", [])]
-        if not any(term.lower() in lower for term in terms):
+        if not any(contains_term(normalized, term) for term in terms):
             failures.append("missing_any:" + "|".join(terms))
+    elif kind == "starts_with":
+        value = str(rule.get("value", ""))
+        if not re.match(rf"^\s*{re.escape(value)}(?=\W|$)", normalized, flags=re.I):
+            failures.append(f"must_start_with:{value}")
+        for term in rule.get("terms", []):
+            if not contains_term(normalized, term):
+                failures.append(f"missing:{term}")
+    elif kind == "regex":
+        pattern = str(rule.get("pattern", ""))
+        if not pattern or not re.search(pattern, normalized):
+            failures.append("regex_mismatch")
     elif kind == "json":
         if normalized.startswith("```"):
             failures.append("markdown_fence")
@@ -118,17 +157,20 @@ def evaluate(text: str, hidden_reasoning: bool, rule: dict[str, Any]) -> tuple[b
         failures.append(f"unknown_rule:{kind}")
 
     for term in rule.get("forbidden", []):
-        if str(term).lower() in lower:
+        if contains_term(normalized, term):
             failures.append(f"forbidden:{term}")
     return not failures, failures
 
 
-def percentile(values: list[float], fraction: float) -> float | None:
-    if not values:
+def percentile(values: list[float], fraction: float, min_samples: int = 1) -> float | None:
+    if len(values) < min_samples:
         return None
     ordered = sorted(values)
-    index = min(len(ordered) - 1, max(0, round((len(ordered) - 1) * fraction)))
-    return ordered[index]
+    position = (len(ordered) - 1) * fraction
+    lower = int(position)
+    upper = min(lower + 1, len(ordered) - 1)
+    weight = position - lower
+    return ordered[lower] * (1 - weight) + ordered[upper] * weight
 
 
 def run_battery(
@@ -143,6 +185,7 @@ def run_battery(
     runtime: str,
     quantization: str,
     no_think: bool,
+    provenance: dict[str, Any] | None = None,
     progress: Callable[[str], None] | None = None,
 ) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
@@ -164,11 +207,11 @@ def run_battery(
             started = utc_now()
             try:
                 response, elapsed = post_chat(endpoint, payload, timeout)
-                text, hidden = extract_text(response)
+                text, hidden, response_kind = extract_response(response)
                 passed, failures = evaluate(text, hidden, scenario["rule"])
                 usage = response.get("usage") or {}
                 completion_tokens = usage.get("completion_tokens")
-                tok_s = (
+                request_tok_s = (
                     float(completion_tokens) / elapsed
                     if isinstance(completion_tokens, (int, float)) and elapsed > 0
                     else None
@@ -179,11 +222,12 @@ def run_battery(
                     "started_utc": started,
                     "elapsed_seconds": round(elapsed, 6),
                     "completion_tokens": completion_tokens,
-                    "generation_tokens_per_second": round(tok_s, 3) if tok_s is not None else None,
+                    "request_tokens_per_second": round(request_tok_s, 3) if request_tok_s is not None else None,
                     "passed": passed,
                     "failures": failures,
-                    "output": text,
+                    "output": redact_text(text),
                     "response_model": response.get("model"),
+                    "response_kind": response_kind,
                     "hidden_reasoning_present": hidden,
                 }
             except Exception as exc:
@@ -193,12 +237,13 @@ def run_battery(
                     "started_utc": started,
                     "elapsed_seconds": None,
                     "completion_tokens": None,
-                    "generation_tokens_per_second": None,
+                    "request_tokens_per_second": None,
                     "passed": False,
                     "failures": ["request_error"],
-                    "error": f"{type(exc).__name__}: {exc}",
+                    "error": redact_text(f"{type(exc).__name__}: {exc}"),
                     "output": "",
                     "response_model": None,
+                    "response_kind": "request_error",
                     "hidden_reasoning_present": False,
                 }
             rows.append(row)
@@ -208,11 +253,19 @@ def run_battery(
                     f"elapsed={row.get('elapsed_seconds')} failures={','.join(row.get('failures', [])) or 'none'}"
                 )
 
-    speeds = [row["generation_tokens_per_second"] for row in rows if row.get("generation_tokens_per_second")]
+    speeds = [row["request_tokens_per_second"] for row in rows if row.get("request_tokens_per_second")]
     latencies = [row["elapsed_seconds"] for row in rows if row.get("elapsed_seconds") is not None]
+    measured_rows = [
+        row for row in rows
+        if isinstance(row.get("completion_tokens"), (int, float))
+        and isinstance(row.get("elapsed_seconds"), (int, float))
+        and row["elapsed_seconds"] > 0
+    ]
+    total_tokens = sum(float(row["completion_tokens"]) for row in measured_rows)
+    total_elapsed = sum(float(row["elapsed_seconds"]) for row in measured_rows)
     passed = sum(1 for row in rows if row["passed"])
-    return {
-        "schema_version": "workman-field-tests.v1",
+    result = {
+        "schema_version": "workman-field-tests.v2" if provenance else "workman-field-tests.v1.1",
         "created_utc": utc_now(),
         "endpoint_label": endpoint.label,
         "model": model,
@@ -228,12 +281,29 @@ def run_battery(
             "passed": passed,
             "total": len(rows),
             "pass_rate": round(passed / len(rows), 6) if rows else 0,
-            "median_generation_tokens_per_second": round(statistics.median(speeds), 3) if speeds else None,
+            "median_request_tokens_per_second": round(statistics.median(speeds), 3) if speeds else None,
+            "aggregate_request_tokens_per_second": round(total_tokens / total_elapsed, 3) if total_elapsed else None,
             "p50_latency_seconds": round(percentile(latencies, 0.50), 3) if latencies else None,
-            "p95_latency_seconds": round(percentile(latencies, 0.95), 3) if latencies else None,
+            "p95_latency_seconds": (
+                round(value, 3)
+                if (value := percentile(latencies, 0.95, min_samples=20)) is not None
+                else None
+            ),
+            "latency_sample_n": len(latencies),
             "empty_output_count": sum(1 for row in rows if "empty_output" in row.get("failures", [])),
             "reasoning_leak_count": sum(1 for row in rows if "reasoning_leak" in row.get("failures", [])),
             "request_error_count": sum(1 for row in rows if "request_error" in row.get("failures", [])),
         },
         "rows": rows,
     }
+    if provenance:
+        result.update(provenance)
+        result["sampling"] = {
+            "temperature": 0,
+            "top_p": 1,
+            "seed": provenance.get("seed"),
+            "max_tokens": max_tokens,
+        }
+        result["concurrency"] = 1
+        result["comparability_class"] = "quality/public-battery"
+    return result

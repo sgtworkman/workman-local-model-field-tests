@@ -5,7 +5,7 @@ labels: ["benchmark-result"]
 body:
   - type: markdown
     attributes:
-      value: "Publish the conditions. Keep the failures. Remove credentials and private network details."
+      value: "Only `workman-field-tests.v2` public-battery artifacts that pass the provenance, comparability, and privacy validator are admitted. Publish the conditions. Keep the failures. Remove credentials and private network details."
   - type: input
     id: model
     attributes:

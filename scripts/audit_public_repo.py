@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import re
 import subprocess
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SELF = Path(__file__).resolve()
+sys.path.insert(0, str(ROOT / "src"))
+
+from workman_field_tests.privacy import scan_text
+
 SKIP = {
     SELF,
     ROOT / "src" / "workman_field_tests" / "sanitize.py",
-}
-PATTERNS = {
-    "credential": re.compile(r"(?:hf|gho|github_pat|sk)-[A-Za-z0-9_-]{12,}"),
-    "personal_path": re.compile(r"/Users/[^/\s]+/"),
-    "tailscale_or_local_hostname": re.compile(r"(?:tailscale|[A-Za-z0-9_-]+\.local\b)", re.I),
-    "cgnat_or_private_100_address": re.compile(r"\b100\.(?:6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])(?:\.[0-9]{1,3}){2}\b"),
+    ROOT / "src" / "workman_field_tests" / "privacy.py",
 }
 
 
@@ -28,19 +27,27 @@ def tracked_files() -> list[Path]:
         return [path for path in ROOT.rglob("*") if path.is_file() and ".git" not in path.parts]
 
 
-def main() -> int:
+def audit_files(paths: list[Path]) -> list[str]:
     findings: list[str] = []
-    for path in tracked_files():
+    for path in paths:
         if path in SKIP or not path.is_file():
             continue
         try:
             text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        for name, pattern in PATTERNS.items():
-            for match in pattern.finditer(text):
-                line = text.count("\n", 0, match.start()) + 1
-                findings.append(f"{path.relative_to(ROOT)}:{line}:{name}")
+        try:
+            display = str(path.relative_to(ROOT))
+        except ValueError:
+            display = path.name
+        for line_number, line in enumerate(text.splitlines(), 1):
+            for finding in scan_text(line):
+                findings.append(f"{display}:{line_number}:{finding}")
+    return findings
+
+
+def main() -> int:
+    findings = audit_files(tracked_files())
     if findings:
         print("PUBLIC_REPO_AUDIT FAIL")
         print("\n".join(findings))
