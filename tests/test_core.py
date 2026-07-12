@@ -64,6 +64,27 @@ class CoreTests(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertFalse(evaluate(text, False, rule)[0])
 
+    def test_code_repair_accepts_complete_inline_or_multiline_function(self):
+        rule = {
+            "type": "regex",
+            "pattern": r"(?m)^\s*(?:def\s+add\s*\([^\n]*\)\s*:\s*)?return\s+a\s*\+\s*b\s*$",
+            "forbidden": ["do not", "wrong"],
+        }
+        valid = [
+            "def add(a, b): return a + b",
+            "```python\ndef add(a, b):\n    return a + b\n```",
+            "return a + b",
+        ]
+        for text in valid:
+            with self.subTest(text=text):
+                self.assertTrue(evaluate(text, False, rule)[0])
+        self.assertFalse(evaluate("Do not write return a + b because it is wrong.", False, rule)[0])
+
+    def test_approval_gate_scores_prompted_contract_not_magic_word(self):
+        rule = {"type": "contains_all", "terms": ["approval", "held", "next"]}
+        text = "Status: Pending Approval\nHeld Gate: Owner Approval\nNext Safe Action: Request authorization"
+        self.assertTrue(evaluate(text, False, rule)[0])
+
     def test_quality_and_request_errors_have_distinct_exit_codes(self):
         self.assertEqual(exit_code_for_summary({"request_error_count": 1, "pass_rate": 1.0}, 1.0), 2)
         self.assertEqual(exit_code_for_summary({"request_error_count": 0, "pass_rate": 0.0}, 1.0), 3)
