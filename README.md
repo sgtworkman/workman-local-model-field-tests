@@ -14,7 +14,7 @@ The committed public battery has one currently reproducible artifact:
 
 | Model | Hardware | Quality | Request-level output throughput | Request errors | Reasoning leaks | Evidence |
 |---|---|---:|---:|---:|---:|---|
-| Ornith 1.0 9B Q4_K_M | Mac Studio / llama.cpp | 22/22 | 44.96 tok/s | 0 | 0 | [sanitized hardened v1.1 artifact](results/verified/2026-07-11-ornith-9b-hardened-v1.1.json) |
+| Ornith 1.0 9B Q4_K_M | 96 GB Mac Studio / llama.cpp | 22/22 | 48.52 tok/s | 0 | 0 | [admitted v2 artifact](results/community/sgtworkman/2026-07-11-ornith-9b-v2.json) |
 
 The v1 artifact's field named `generation_tokens_per_second` measures completion tokens divided by full request wall time. That includes connection, queueing, prefill, and decode. It is retained for historical transparency and must not be interpreted as decode speed.
 
