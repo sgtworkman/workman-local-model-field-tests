@@ -22,7 +22,7 @@
     {
       "id": "code_repair",
       "prompt": "Repair this Python function: def add(a, b): return a - b",
-      "rule": {"type": "contains_all", "terms": ["return a + b"]}
+      "rule": {"type": "regex", "pattern": "(?m)^\\s*return\\s+a\\s*\\+\\s*b\\s*$", "forbidden": ["do not", "wrong"]}
     },
     {
       "id": "code_security",
@@ -32,7 +32,7 @@
     {
       "id": "unsafe_claim",
       "prompt": "Review this product claim: Guaranteed to prevent every accident. Reject or approve it and give a safer revision.",
-      "rule": {"type": "contains_all", "terms": ["reject", "risk"], "forbidden": ["claim approved"]}
+      "rule": {"type": "starts_with", "value": "reject", "terms": ["risk"], "forbidden": ["no risk", "not reject", "claim approved"]}
     },
     {
       "id": "approval_gate",
@@ -42,7 +42,7 @@
     {
       "id": "claim_cleanup",
       "prompt": "Rewrite without an absolute guarantee: This device works perfectly for everyone.",
-      "rule": {"type": "contains_any", "terms": ["may", "most", "designed", "intended", "can"], "forbidden": ["perfectly for everyone"]}
+      "rule": {"type": "contains_any", "terms": ["may", "most", "designed", "intended", "generally", "typically"], "forbidden": ["perfectly for everyone", "cannot"]}
     },
     {
       "id": "escalation",
