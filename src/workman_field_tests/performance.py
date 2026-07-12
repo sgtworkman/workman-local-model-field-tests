@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import json
+import socket
 import statistics
 import time
 import urllib.error
@@ -84,6 +85,7 @@ def stream_chat(
     usage_tokens: int | None = None
     content_events = 0
     reasoning_leak = False
+    saw_done = False
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             for raw_line in response:
@@ -92,6 +94,7 @@ def stream_chat(
                     continue
                 data = line[5:].strip()
                 if data == "[DONE]":
+                    saw_done = True
                     break
                 try:
                     event = json.loads(data)
@@ -113,12 +116,17 @@ def stream_chat(
         detail = redact_text(exc.read(1024).decode("utf-8", errors="replace"))
         return _failed_measurement(request_id, intended_send, actual_send, run_started, f"http_{exc.code}:{detail[:160]}")
     except Exception as exc:
-        return _failed_measurement(request_id, intended_send, actual_send, run_started, f"{type(exc).__name__}:{redact_text(str(exc))[:160]}")
+        failure = "timeout" if isinstance(exc, (TimeoutError, socket.timeout)) else f"{type(exc).__name__}:{redact_text(str(exc))[:160]}"
+        return _failed_measurement(request_id, intended_send, actual_send, run_started, failure)
 
     finished = time.perf_counter()
+    if reasoning_leak:
+        return _failed_measurement(request_id, intended_send, actual_send, run_started, "reasoning_leak", reasoning_leak=True)
+    if not saw_done:
+        return _failed_measurement(request_id, intended_send, actual_send, run_started, "incomplete_stream")
     if first_content is None or last_content is None:
         return _failed_measurement(request_id, intended_send, actual_send, run_started, "empty_stream")
-    failure = "reasoning_leak" if reasoning_leak else ("missing_usage" if usage_tokens is None else None)
+    failure = "missing_usage" if usage_tokens is None else None
     decode_seconds = max(last_content - first_content, 0)
     tpot = (
         decode_seconds / max(usage_tokens - 1, 1)
@@ -152,6 +160,7 @@ def _failed_measurement(
     actual_send: float,
     run_started: float,
     failure: str,
+    reasoning_leak: bool = False,
 ) -> StreamMeasurement:
     return StreamMeasurement(
         request_id=request_id,
@@ -164,7 +173,7 @@ def _failed_measurement(
         decode_tokens_per_second=None,
         completion_tokens=None,
         streamed_content_event_count=0,
-        reasoning_leak=False,
+        reasoning_leak=reasoning_leak,
         failure=failure,
     )
 

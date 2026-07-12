@@ -15,8 +15,17 @@ class StreamingHandler(BaseHTTPRequestHandler):
         length = int(self.headers.get("Content-Length", "0"))
         request = json.loads(self.rfile.read(length))
         prompt = request["messages"][-1]["content"]
-        if "MALFORMED" in prompt:
+        if "TIMEOUT" in prompt:
+            time.sleep(0.2)
+            events = ["data: [DONE]\n\n"]
+        elif "MALFORMED" in prompt:
             events = ["data: {broken}\n\n", "data: [DONE]\n\n"]
+        elif "MISSING_USAGE" in prompt:
+            events = ['data: {"choices":[{"delta":{"content":"one"}}]}\n\n', "data: [DONE]\n\n"]
+        elif "REASONING_ONLY" in prompt:
+            events = ['data: {"choices":[{"delta":{"reasoning_content":"secret"}}],"usage":{"completion_tokens":1}}\n\n', "data: [DONE]\n\n"]
+        elif "INCOMPLETE" in prompt:
+            events = ['data: {"choices":[{"delta":{"content":"one"}}],"usage":{"completion_tokens":1}}\n\n']
         else:
             events = [
                 'data: {"choices":[{"delta":{"content":"one"}}]}\n\n',
@@ -84,6 +93,51 @@ class PerformanceTests(unittest.TestCase):
         )
         self.assertFalse(result.success)
         self.assertEqual(result.failure, "malformed_sse")
+
+    def measurement(self, prompt, timeout=2):
+        started = time.perf_counter()
+        return stream_chat(
+            endpoint=self.endpoint,
+            model="fixture",
+            prompt=prompt,
+            max_tokens=3,
+            timeout=timeout,
+            no_think=False,
+            request_id=0,
+            intended_send=started,
+            run_started=started,
+        )
+
+    def test_stream_failure_taxonomy(self):
+        cases = {
+            "MISSING_USAGE": "missing_usage",
+            "REASONING_ONLY": "reasoning_leak",
+            "INCOMPLETE": "incomplete_stream",
+            "TIMEOUT": "timeout",
+        }
+        for prompt, expected in cases.items():
+            with self.subTest(prompt=prompt):
+                result = self.measurement(prompt, timeout=0.05 if prompt == "TIMEOUT" else 2)
+                self.assertFalse(result.success)
+                self.assertEqual(result.failure, expected)
+
+    def test_concurrency_request_accounting_at_supported_levels(self):
+        for concurrency in (2, 8, 24):
+            with self.subTest(concurrency=concurrency):
+                result = run_load_level(
+                    endpoint=self.endpoint,
+                    model="fixture",
+                    prompt="stream",
+                    max_tokens=3,
+                    timeout=3,
+                    no_think=False,
+                    concurrency=concurrency,
+                    request_count=concurrency,
+                    request_rate=0,
+                )
+                self.assertEqual(result["success_count"], concurrency)
+                self.assertEqual(len(result["rows"]), concurrency)
+                self.assertEqual({row["request_id"] for row in result["rows"]}, set(range(concurrency)))
 
 
 if __name__ == "__main__":
