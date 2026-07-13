@@ -133,9 +133,12 @@ def stream_chat(
         if usage_tokens is not None
         else None
     )
+    # TTFT owns the first generated token. Decode rate and TPOT therefore use
+    # only the remaining completion tokens over the inter-token interval.
+    decode_token_count = max(usage_tokens - 1, 0) if usage_tokens is not None else None
     decode_rate = (
-        usage_tokens / decode_seconds
-        if usage_tokens is not None and decode_seconds > 0
+        decode_token_count / decode_seconds
+        if decode_token_count is not None and decode_token_count > 0 and decode_seconds > 0
         else None
     )
     return StreamMeasurement(

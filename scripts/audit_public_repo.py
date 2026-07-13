@@ -21,7 +21,13 @@ SKIP = {
 
 def tracked_files() -> list[Path]:
     try:
-        output = subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True)
+        # Include untracked, non-ignored release candidates. Auditing only the
+        # index can miss a leak in a new file immediately before commit.
+        output = subprocess.check_output(
+            ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+            cwd=ROOT,
+            text=True,
+        )
         return [ROOT / line for line in output.splitlines() if line]
     except subprocess.CalledProcessError:
         return [path for path in ROOT.rglob("*") if path.is_file() and ".git" not in path.parts]

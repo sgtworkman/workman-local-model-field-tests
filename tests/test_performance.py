@@ -86,6 +86,8 @@ class PerformanceTests(unittest.TestCase):
         self.assertGreater(result["aggregate_output_tokens_per_second"], 0)
         self.assertTrue(all(row["ttft_seconds"] is not None for row in result["rows"]))
         self.assertTrue(all(row["tpot_seconds"] is not None for row in result["rows"]))
+        for row in result["rows"]:
+            self.assertAlmostEqual(row["decode_tokens_per_second"], 1 / row["tpot_seconds"], places=1)
         self.assertEqual({row["request_id"] for row in result["rows"]}, {0, 1, 2, 3})
 
     def test_malformed_sse_has_distinct_failure(self):

@@ -27,9 +27,11 @@ class AdmissionTests(unittest.TestCase):
             "sampling": {"temperature": 0, "top_p": 1, "seed": 0, "max_tokens": 10},
             "concurrency": 1,
             "no_think_controls": False,
+            "scenario_count": 1,
+            "repeats": 1,
             "created_utc": "2026-07-11T00:00:00Z",
             "summary": {"passed": 1, "total": 1, "pass_rate": 1, "latency_sample_n": 1},
-            "rows": [{"scenario_id": "fixture", "passed": True}],
+            "rows": [{"scenario_id": "fixture", "repeat": 1, "passed": True}],
             "comparability_class": "quality/public-battery",
         }
 
@@ -53,6 +55,23 @@ class AdmissionTests(unittest.TestCase):
             issues = validate_result(data, scenario)
             self.assertIn("scenario_sha256_mismatch", issues)
             self.assertTrue(any(issue.startswith("privacy:") for issue in issues))
+
+    def test_duplicate_repeat_and_inconsistent_summary_are_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            scenario = Path(temp) / "scenarios.json"
+            scenario.write_text('{"scenarios":[]}', encoding="utf-8")
+            data = self.fixture(scenario)
+            data["repeats"] = 2
+            data["rows"] = [
+                {"scenario_id": "fixture", "repeat": 1, "passed": True},
+                {"scenario_id": "fixture", "repeat": 1, "passed": True},
+            ]
+            data["summary"] = {"passed": 1, "total": 1, "pass_rate": 0.5, "latency_sample_n": 2}
+            issues = validate_result(data, scenario)
+            self.assertIn("duplicate_scenario_repeat", issues)
+            self.assertIn("summary_total_mismatch", issues)
+            self.assertIn("summary_passed_mismatch", issues)
+            self.assertIn("summary_pass_rate_mismatch", issues)
 
 
 if __name__ == "__main__":
