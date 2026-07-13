@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<rect width="1600" height="1000" fill="#F7F8FA"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#172033}.title{font-size:48px;font-weight:750}.deck{font-size:22px;fill:#566174}.panel{font-size:29px;font-weight:700}.sub{font-size:17px;fill:#687386}.label{font-size:19px;font-weight:600}.value{font-size:20px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700}.quality{font-size:15px;fill:#687386}.foot{font-size:16px;fill:#687386}</style>
+<text x="70" y="82" class="title">Local model field-test results</text>
+<text x="70" y="122" class="deck">Single-session aggregate output throughput. Quality uses the same 22-check public battery.</text>
+<line x1="800" y1="180" x2="800" y2="820" stroke="#D8DDE6" stroke-width="2"/>
+<text x="70" y="200" class="panel">Mac Studio</text>
+<text x="70" y="230" class="sub">96 GB unified memory · GGUF Q4_K_M · llama.cpp</text>
+<text x="70" y="300" class="label">Ornith 35B</text>
+<rect x="300" y="280" width="330.0" height="30" rx="5" fill="#C97A2B"/>
+<text x="642.0" y="301" class="value">81.4</text>
+<text x="300" y="330" class="quality">quality 18/22</text>
+<text x="70" y="366" class="label">Qwen3.6 35B-A3B</text>
+<rect x="300" y="346" width="312.2" height="30" rx="5" fill="#2166C1"/>
+<text x="624.2" y="367" class="value">77.0</text>
+<text x="300" y="396" class="quality">quality 22/22</text>
+<text x="70" y="432" class="label">Ornith 9B</text>
+<rect x="300" y="412" width="303.2" height="30" rx="5" fill="#2166C1"/>
+<text x="615.2" y="433" class="value">74.8</text>
+<text x="300" y="462" class="quality">quality 22/22</text>
+<text x="70" y="498" class="label">Qwen3-Coder-Next</text>
+<rect x="300" y="478" width="236.4" height="30" rx="5" fill="#2166C1"/>
+<text x="548.4" y="499" class="value">58.3</text>
+<text x="300" y="528" class="quality">quality 22/22</text>
+<text x="70" y="564" class="label">Gemma 4 12B</text>
+<rect x="300" y="544" width="217.8" height="30" rx="5" fill="#2166C1"/>
+<text x="529.8" y="565" class="value">53.7</text>
+<text x="300" y="594" class="quality">quality 22/22</text>
+<text x="70" y="630" class="label">Qwen3.6 27B</text>
+<rect x="300" y="610" width="110.1" height="30" rx="5" fill="#2166C1"/>
+<text x="422.1" y="631" class="value">27.2</text>
+<text x="300" y="660" class="quality">quality 22/22</text>
+<text x="860" y="200" class="panel">DGX Spark</text>
+<text x="860" y="230" class="sub">128 GB unified memory · NVFP4 · vLLM</text>
+<text x="860" y="300" class="label">35B NVFP4-Fast</text>
+<rect x="1090" y="280" width="330.0" height="30" rx="5" fill="#9C7A18"/>
+<text x="1432.0" y="301" class="value">58.3</text>
+<text x="1090" y="330" class="quality">quality 22/22</text>
+<text x="860" y="366" class="label">35B NVFP4</text>
+<rect x="1090" y="346" width="252.7" height="30" rx="5" fill="#9C7A18"/>
+<text x="1354.7" y="367" class="value">44.7</text>
+<text x="1090" y="396" class="quality">quality 22/22</text>
+<text x="860" y="432" class="label">27B NVFP4</text>
+<rect x="1090" y="412" width="94.7" height="30" rx="5" fill="#9C7A18"/>
+<text x="1196.7" y="433" class="value">16.7</text>
+<text x="1090" y="462" class="quality">quality 22/22</text>
+<line x1="70" y1="860" x2="1530" y2="860" stroke="#D8DDE6" stroke-width="2"/>
+<text x="70" y="902" class="foot">Metric: successful completion tokens ÷ full load-window wall time at concurrency 1. Not decode-only speed.</text>
+<text x="70" y="934" class="foot">Host rankings are separate. Orange marks a strict quality-contract miss. Source: workman-field-tests.v2 · 2026-07-12.</text>
+<text x="70" y="966" class="foot">github.com/sgtworkman/workman-local-model-field-tests</text>
+</svg>

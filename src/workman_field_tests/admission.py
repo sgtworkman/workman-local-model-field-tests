@@ -28,6 +28,8 @@ REQUIRED = {
     "sampling",
     "concurrency",
     "no_think_controls",
+    "scenario_count",
+    "repeats",
     "created_utc",
     "summary",
     "rows",
@@ -66,6 +68,38 @@ def validate_result(data: dict[str, Any], scenario_path: Path | None = None, ver
     rows = data.get("rows")
     if not isinstance(rows, list) or not rows:
         issues.append("rows_required")
+    else:
+        identities: list[tuple[Any, Any]] = []
+        for index, row in enumerate(rows):
+            if not isinstance(row, dict):
+                issues.append(f"invalid_row:{index}")
+                continue
+            identity = (row.get("scenario_id"), row.get("repeat"))
+            if not isinstance(identity[0], str) or not identity[0] or not isinstance(identity[1], int):
+                issues.append(f"invalid_row_identity:{index}")
+            identities.append(identity)
+        if len(identities) != len(set(identities)):
+            issues.append("duplicate_scenario_repeat")
+
+        scenario_count = data.get("scenario_count")
+        repeats = data.get("repeats")
+        if isinstance(scenario_count, int) and isinstance(repeats, int):
+            if len(rows) != scenario_count * repeats:
+                issues.append("row_count_mismatch")
+
+        passed = sum(1 for row in rows if isinstance(row, dict) and row.get("passed") is True)
+        if isinstance(summary, dict):
+            if summary.get("total") != len(rows):
+                issues.append("summary_total_mismatch")
+            if summary.get("passed") != passed:
+                issues.append("summary_passed_mismatch")
+            expected_rate = passed / len(rows) if rows else 0.0
+            try:
+                actual_rate = float(summary.get("pass_rate"))
+            except (TypeError, ValueError):
+                actual_rate = -1.0
+            if abs(actual_rate - expected_rate) > 0.000001:
+                issues.append("summary_pass_rate_mismatch")
     if data.get("hardware_memory_gb") is not None and not isinstance(data.get("hardware_memory_gb"), (int, float)):
         issues.append("invalid_hardware_memory_gb")
     if data.get("context_limit") is not None and not isinstance(data.get("context_limit"), int):

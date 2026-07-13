@@ -45,7 +45,7 @@ No-think controls are opt-in because strict non-Qwen servers may reject unknown 
 
 ## Throughput
 
-The non-streaming runner reports request-level output-token throughput when the server returns `usage.completion_tokens`. It divides completion tokens by full request wall time, including connection, queueing, prefill, decode, and response read. It is not decode speed. Streaming TTFT, inter-token latency, and decode-rate measurement are planned for v2.
+The non-streaming runner reports request-level output-token throughput when the server returns `usage.completion_tokens`. It divides completion tokens by full request wall time, including connection, queueing, prefill, decode, and response read. It is not decode speed.
 
 For dedicated throughput work, publish the load generator, fixed input/output lengths, concurrency, request count, warmup, scheduler, KV-cache, speculative-decoding, batching, and percentile sample sizes alongside any number.
 
@@ -53,12 +53,19 @@ For dedicated throughput work, publish the load generator, fixed input/output le
 
 - TTFT = first non-empty content event minus actual request send.
 - TPOT = last-content time minus first-content time, divided by `max(completion_tokens - 1, 1)`.
+- Decode rate = `completion_tokens - 1` divided by last-content time minus first-content time. The first token belongs to TTFT and is not counted again as a decode token.
 - End-to-end latency = stream completion minus actual request send.
 - Request throughput = completed requests divided by load-window wall time.
 - Aggregate output-token throughput = successful completion tokens divided by load-window wall time.
 - Concurrency efficiency = aggregate output-token throughput at concurrency C divided by `C ×` median concurrency-1 decode rate.
 
 Token-derived streaming metrics require `usage.completion_tokens`. Missing usage is a failure, not an invitation to count SSE chunks as tokens. Open-loop runs report client dispatch delay so load-generator backlog is visible.
+
+Streaming artifacts created before harness v0.2.1 used total completion tokens in the row-level `decode_tokens_per_second` numerator while TPOT excluded the first token. Their aggregate output-token throughput, TTFT, TPOT, end-to-end latency, success rate, and published host-ranking tables are unaffected. Do not use those historical row-level decode fields for precise comparisons.
+
+## Admission integrity
+
+Every v2 quality artifact must contain exactly one row per `(scenario_id, repeat)` identity. Admission rejects duplicate identities, missing rows, and summary totals, pass counts, or pass rates that do not reconcile to raw rows. Temperature-zero repeats are timing samples and never multiply the number of independent quality checks.
 
 ## Limits
 
