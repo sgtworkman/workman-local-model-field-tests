@@ -28,7 +28,7 @@ The hardened artifacts are safe for same-battery quality comparisons and host-sp
 
 ## Automated regression proof
 
-`PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v` passes 32 tests. All nine v2 artifacts pass admission with commit verification. The public repository audit passes.
+`PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v` passes 33 tests. All nine v2 artifacts pass admission with commit verification. The public repository audit passes.
 
 ## Remaining gates
 

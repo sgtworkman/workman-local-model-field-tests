@@ -23,7 +23,7 @@ python -m pip install -e .
 python scripts/verify_release.py
 ```
 
-Expected result: 32 tests pass, the public boundary audit passes, all nine verified v2 quality artifacts pass admission, and the command ends with `RELEASE_VERIFICATION PASS`.
+Expected result: 33 tests pass, the public boundary audit passes, all nine verified v2 quality artifacts pass admission, and the command ends with `RELEASE_VERIFICATION PASS`.
 
 Regenerate the SVG chart with `python scripts/build_public_chart.py`. On macOS, generate the PNG social asset with:
 
