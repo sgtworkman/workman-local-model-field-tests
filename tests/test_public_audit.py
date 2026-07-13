@@ -2,10 +2,16 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.audit_public_repo import audit_files
+from scripts.audit_public_repo import audit_files, tracked_files
 
 
 class PublicAuditTests(unittest.TestCase):
+    def test_release_audit_includes_untracked_candidates(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1]) as temp:
+            path = Path(temp) / "new-public-candidate.txt"
+            path.write_text("safe fixture", encoding="utf-8")
+            self.assertIn(path, tracked_files())
+
     def test_private_network_fixtures_fail_boundary_audit(self):
         fixture_text = "\n".join(
             [
