@@ -6,7 +6,7 @@
 <text x="70" y="119" class="deck">Speed is one score. Role reliability is another. Keep them separate.</text>
 <text x="70" y="181" class="section">Controlled semantic role rankings</text>
 <text x="70" y="213" class="sub">Full comparable batteries. Frontier controls are ceilings, never local ranks.</text>
-<text x="70" y="270" class="panel">Blog Factory</text>
+<text x="70" y="270" class="panel">Structured Publishing</text>
 <text x="70" y="299" class="sub">Semantic pass rate · 72 trials</text>
 <text x="70" y="351" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Ornith 35B</tspan></text>
 <rect x="325" y="332" width="335" height="27" rx="4" class="track"/>
@@ -60,7 +60,7 @@
 <rect x="1090" y="674" width="335.0" height="27" rx="4" class="bar reference"/>
 <text x="1530" y="694" text-anchor="end" class="value">100.0%</text>
 <text x="1090" y="718" class="detail">frontier ceiling · unranked</text>
-<text x="70" y="776" class="panel">Loop Forge</text>
+<text x="70" y="776" class="panel">Workflow Orchestration</text>
 <text x="70" y="805" class="sub">Semantic pass rate · 64 trials</text>
 <text x="70" y="857" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Qwen3.6 35B-A3B</tspan></text>
 <rect x="325" y="838" width="335" height="27" rx="4" class="track"/>
@@ -87,7 +87,7 @@
 <rect x="325" y="1066" width="335.0" height="27" rx="4" class="bar reference"/>
 <text x="765" y="1086" text-anchor="end" class="value">100.0%</text>
 <text x="325" y="1110" class="detail">frontier ceiling · unranked</text>
-<text x="835" y="776" class="panel">Workman Worker</text>
+<text x="835" y="776" class="panel">General Operations</text>
 <text x="835" y="805" class="sub">Semantic role gate</text>
 <text x="835" y="857" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Ornith 9B</tspan></text>
 <rect x="1090" y="838" width="335" height="27" rx="4" class="track"/>

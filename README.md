@@ -33,7 +33,7 @@ See the [2026-07-11 adversarial audit remediation](docs/AUDIT_REMEDIATION_2026-0
 
 ## Operator role rankings
 
-The [2026-07-13 role-ranking update](results/verified/2026-07-13-role-rankings/) publishes sanitized aggregate results for four governed operator roles: Blog Factory, Code Repair, Loop Forge, and Workman Worker.
+The [2026-07-13 role-ranking update](results/verified/2026-07-13-role-rankings/) publishes sanitized aggregate results for four governed operator roles: Structured Publishing, Code Repair, Workflow Orchestration, and General Operations.
 
 ![Local model role rankings and host-separated field-test evidence](docs/assets/local-model-role-rankings-2026-07-13.svg)
 

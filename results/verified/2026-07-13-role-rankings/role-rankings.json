@@ -5,9 +5,9 @@
   "ranking_rule": "per_lane_owned_local_only",
   "frontier_rule": "reference_ceiling_unranked",
   "rows": [
-    {"lane":"Blog Factory","rank":1,"model":"Ornith 35B","semantic_pass_rate":1.0,"trials":72,"status":"active_control"},
-    {"lane":"Blog Factory","rank":2,"model":"Qwen3.6 35B-A3B","semantic_pass_rate":1.0,"trials":72,"status":"retired_rollback_only"},
-    {"lane":"Blog Factory","rank":3,"model":"Qwen3.6 35B NVFP4-Fast","semantic_pass_rate":1.0,"trials":72,"status":"report_only","receipt_sha256":"cb29abd5b15c3fb33f08c91e06d096aed7f6d770d882fb5120796afefa05628c"},
+    {"lane":"Structured Publishing","rank":1,"model":"Ornith 35B","semantic_pass_rate":1.0,"trials":72,"status":"active_control"},
+    {"lane":"Structured Publishing","rank":2,"model":"Qwen3.6 35B-A3B","semantic_pass_rate":1.0,"trials":72,"status":"retired_rollback_only"},
+    {"lane":"Structured Publishing","rank":3,"model":"Qwen3.6 35B NVFP4-Fast","semantic_pass_rate":1.0,"trials":72,"status":"report_only","receipt_sha256":"cb29abd5b15c3fb33f08c91e06d096aed7f6d770d882fb5120796afefa05628c"},
     {"lane":"Code Repair","rank":1,"model":"Qwen3-Coder-Next","semantic_pass_rate":1.0,"trials":72,"status":"active_control"},
     {"lane":"Code Repair","rank":2,"model":"Qwen3-Coder 30B","semantic_pass_rate":1.0,"trials":72,"status":"rollback_control"},
     {"lane":"Code Repair","rank":3,"model":"Qwen3.6 35B NVFP4-Fast","semantic_pass_rate":1.0,"trials":72,"status":"report_only","receipt_sha256":"ceea0fffcf3a549b83ca582a0c41080ed89dc63670c6e2151976031537dfe4f6"},
@@ -15,12 +15,12 @@
     {"lane":"Code Repair","rank":5,"model":"Ministral 14B","semantic_pass_rate":0.7777777778,"trials":72,"status":"needs_hardening","receipt_sha256":"735f7ef241192c8e6993e55b01ad461366e7ef150f4fbd3d6510f56367b43f58"},
     {"lane":"Code Repair","rank":6,"model":"Nemotron 30B","semantic_pass_rate":0.5694444444,"trials":72,"status":"needs_hardening","receipt_sha256":"618c859488e8e3eba61cd41d852ee1ee17763a633ec0d357cfce8b40199ef8b9"},
     {"lane":"Code Repair","rank":null,"model":"Frontier control","semantic_pass_rate":1.0,"trials":72,"status":"reference_ceiling_unranked","receipt_sha256":"a304acc462cda7b6af9492f590e1b5b6e1fbbbcf538cae83a81b570a96093ac7"},
-    {"lane":"Loop Forge","rank":1,"model":"Qwen3.6 35B-A3B","semantic_pass_rate":1.0,"trials":64,"status":"active_control"},
-    {"lane":"Loop Forge","rank":2,"model":"Qwen3.6 35B NVFP4-Fast","semantic_pass_rate":1.0,"trials":64,"status":"report_only","receipt_sha256":"8cb718a7dc25449a36267a41e13943fc0c4751662c8085a0207705dc6140b7c1"},
-    {"lane":"Loop Forge","rank":3,"model":"Ministral 14B","semantic_pass_rate":0.875,"trials":64,"status":"needs_hardening","receipt_sha256":"8ec6e806e67882d8180c025df239e4a16881a1dd97ac4fa37bb5790364ba196b"},
-    {"lane":"Loop Forge","rank":4,"model":"Nemotron 30B","semantic_pass_rate":0.578125,"trials":64,"status":"needs_hardening","receipt_sha256":"d77fa69e507ede7943474852bfaf6fa1614bc05f8cef3ddb82d1f2d98a9a1cb4"},
-    {"lane":"Loop Forge","rank":null,"model":"Frontier control","semantic_pass_rate":1.0,"trials":64,"status":"reference_ceiling_unranked","receipt_sha256":"bba8740136e616960ff7548aace1a93b1b3a8b5f78ac7c77804b0450e45340c8"},
-    {"lane":"Workman Worker","rank":1,"model":"Ornith 9B","semantic_pass_rate":1.0,"trials":40,"status":"active_control"}
+    {"lane":"Workflow Orchestration","rank":1,"model":"Qwen3.6 35B-A3B","semantic_pass_rate":1.0,"trials":64,"status":"active_control"},
+    {"lane":"Workflow Orchestration","rank":2,"model":"Qwen3.6 35B NVFP4-Fast","semantic_pass_rate":1.0,"trials":64,"status":"report_only","receipt_sha256":"8cb718a7dc25449a36267a41e13943fc0c4751662c8085a0207705dc6140b7c1"},
+    {"lane":"Workflow Orchestration","rank":3,"model":"Ministral 14B","semantic_pass_rate":0.875,"trials":64,"status":"needs_hardening","receipt_sha256":"8ec6e806e67882d8180c025df239e4a16881a1dd97ac4fa37bb5790364ba196b"},
+    {"lane":"Workflow Orchestration","rank":4,"model":"Nemotron 30B","semantic_pass_rate":0.578125,"trials":64,"status":"needs_hardening","receipt_sha256":"d77fa69e507ede7943474852bfaf6fa1614bc05f8cef3ddb82d1f2d98a9a1cb4"},
+    {"lane":"Workflow Orchestration","rank":null,"model":"Frontier control","semantic_pass_rate":1.0,"trials":64,"status":"reference_ceiling_unranked","receipt_sha256":"bba8740136e616960ff7548aace1a93b1b3a8b5f78ac7c77804b0450e45340c8"},
+    {"lane":"General Operations","rank":1,"model":"Ornith 9B","semantic_pass_rate":1.0,"trials":40,"status":"active_control"}
   ],
   "qwen_fast_confirmation": {
     "full_role_trials_passed": 208,

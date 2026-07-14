@@ -6,11 +6,11 @@ Fast is easy to benchmark.
 
 Reliable is harder.
 
-Qwen3.6 35B NVFP4-Fast went 208/208 across Blog Factory, Code Repair, and Loop Forge.
+Qwen3.6 35B NVFP4-Fast went 208/208 across structured publishing, code repair, and workflow orchestration.
 
 Then it went 208/208 again in the first passive watchdog.
 
-It tied every current role champion on semantic quality. We reran the champions live. They passed too.
+It tied every current role control on semantic quality. We reran the controls live. They passed too.
 
 Still no automatic promotion.
 

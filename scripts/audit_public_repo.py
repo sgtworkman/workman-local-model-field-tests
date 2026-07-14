@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import hashlib
+import re
 import subprocess
 import sys
 from functools import lru_cache
@@ -26,6 +28,12 @@ BINARY_SUFFIXES = {
     ".pdf",
     ".png",
     ".webp",
+}
+
+INTERNAL_LABEL_HASH_TO_PUBLIC = {
+    "8dbba3f0dca194f303d6e6410318c9dd32f95741ae0e0bccd55b3fb83d03d3c5": "Structured Publishing",
+    "271376f5760cab063a87260e9de3b6ba32d68dce16fe5b98e7d4ab9da5428b4a": "Workflow Orchestration",
+    "98b775e6e3ecc4988cadd85de0ada9805f6645803f8179c2caaef7e2773de004": "General Operations",
 }
 
 
@@ -80,6 +88,21 @@ def read_audit_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def internal_label_findings(
+    line: str,
+    blocked: dict[str, str] = INTERNAL_LABEL_HASH_TO_PUBLIC,
+) -> list[str]:
+    words = re.findall(r"[a-z0-9]+", line.casefold())
+    findings: list[str] = []
+    for width in range(2, 5):
+        for start in range(len(words) - width + 1):
+            phrase = " ".join(words[start : start + width])
+            digest = hashlib.sha256(phrase.encode("utf-8")).hexdigest()
+            if digest in blocked:
+                findings.append(f"internal_label_hash:{digest};use={blocked[digest]}")
+    return findings
+
+
 def audit_files(paths: list[Path]) -> list[str]:
     findings: list[str] = []
     for path in paths:
@@ -95,6 +118,8 @@ def audit_files(paths: list[Path]) -> list[str]:
             display = path.name
         for line_number, line in enumerate(text.splitlines(), 1):
             for finding in scan_text(line):
+                findings.append(f"{display}:{line_number}:{finding}")
+            for finding in internal_label_findings(line):
                 findings.append(f"{display}:{line_number}:{finding}")
     return findings
 
