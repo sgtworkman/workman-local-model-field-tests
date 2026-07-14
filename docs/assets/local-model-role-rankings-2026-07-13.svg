@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" viewBox="0 0 1600 2465" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">Workman local model rankings</title>
+<desc id="chart-desc">Controlled semantic role rankings, public battery throughput rankings by host, and provisional smoke evidence.</desc>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:var(--foreground,#172033)}.title{font-size:48px;font-weight:500}.deck{font-size:23px;fill:var(--muted-foreground,#566174)}.section{font-size:31px;font-weight:500}.panel{font-size:27px;font-weight:500}.sub,.detail,.foot{fill:var(--muted-foreground,#687386)}.sub{font-size:17px}.label{font-size:18px;font-weight:500}.rank{fill:var(--muted-foreground,#687386)}.value{font:500 19px ui-monospace,SFMono-Regular,Menlo,monospace}.detail{font-size:14px}.track{fill:color-mix(in srgb,var(--muted,#d8dde6) 55%,transparent)}.bar.green{fill:var(--viz-series-1,#2166c1)}.bar.yellow{fill:var(--viz-series-3,#c97a2b)}.bar.retired{fill:var(--viz-series-5,#788396)}.bar.reference{fill:color-mix(in srgb,var(--viz-series-2,#8b5cf6) 35%,transparent)}.rule{stroke:var(--border,#d8dde6);stroke-width:2}.foot{font-size:15px}</style>
+<text x="70" y="78" class="title">Local model rankings</text>
+<text x="70" y="119" class="deck">Speed is one score. Role reliability is another. Keep them separate.</text>
+<text x="70" y="181" class="section">Controlled semantic role rankings</text>
+<text x="70" y="213" class="sub">Full comparable batteries. Frontier controls are ceilings, never local ranks.</text>
+<text x="70" y="270" class="panel">Structured Publishing</text>
+<text x="70" y="299" class="sub">Semantic pass rate · 72 trials</text>
+<text x="70" y="351" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Ornith 35B</tspan></text>
+<rect x="325" y="332" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="332" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="352" text-anchor="end" class="value">100.0%</text>
+<text x="325" y="376" class="detail">green · active control</text>
+<text x="70" y="408" class="label"><tspan class="rank">#2</tspan><tspan dx="8">Qwen3.6 35B-A3B</tspan></text>
+<rect x="325" y="389" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="389" width="335.0" height="27" rx="4" class="bar retired"/>
+<text x="765" y="409" text-anchor="end" class="value">100.0%</text>
+<text x="325" y="433" class="detail">retired · rollback only</text>
+<text x="70" y="465" class="label"><tspan class="rank">#3</tspan><tspan dx="8">Qwen3.6 35B NVFP4-Fast</tspan></text>
+<rect x="325" y="446" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="446" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="466" text-anchor="end" class="value">100.0%</text>
+<text x="325" y="490" class="detail">green · report-only</text>
+<text x="835" y="270" class="panel">Code Repair</text>
+<text x="835" y="299" class="sub">Semantic pass rate · 72 trials</text>
+<text x="835" y="351" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Qwen3-Coder-Next</tspan></text>
+<rect x="1090" y="332" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="332" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="352" text-anchor="end" class="value">100.0%</text>
+<text x="1090" y="376" class="detail">green · active control</text>
+<text x="835" y="408" class="label"><tspan class="rank">#2</tspan><tspan dx="8">Qwen3-Coder 30B</tspan></text>
+<rect x="1090" y="389" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="389" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="409" text-anchor="end" class="value">100.0%</text>
+<text x="1090" y="433" class="detail">green · rollback control</text>
+<text x="835" y="465" class="label"><tspan class="rank">#3</tspan><tspan dx="8">Qwen3.6 35B NVFP4-Fast</tspan></text>
+<rect x="1090" y="446" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="446" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="466" text-anchor="end" class="value">100.0%</text>
+<text x="1090" y="490" class="detail">green · report-only</text>
+<text x="835" y="522" class="label"><tspan class="rank">#4</tspan><tspan dx="8">Qwen3.6 35B-A3B</tspan></text>
+<rect x="1090" y="503" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="503" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="523" text-anchor="end" class="value">100.0%</text>
+<text x="1090" y="547" class="detail">green · report-only</text>
+<text x="835" y="579" class="label"><tspan class="rank">#5</tspan><tspan dx="8">Ministral 14B</tspan></text>
+<rect x="1090" y="560" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="560" width="260.6" height="27" rx="4" class="bar yellow"/>
+<text x="1530" y="580" text-anchor="end" class="value">77.8%</text>
+<text x="1090" y="604" class="detail">yellow · needs hardening</text>
+<text x="835" y="636" class="label"><tspan class="rank">#6</tspan><tspan dx="8">Nemotron 30B</tspan></text>
+<rect x="1090" y="617" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="617" width="190.8" height="27" rx="4" class="bar yellow"/>
+<text x="1530" y="637" text-anchor="end" class="value">56.9%</text>
+<text x="1090" y="661" class="detail">yellow · needs hardening</text>
+<text x="835" y="693" class="label"><tspan class="rank">Ref</tspan><tspan dx="8">Frontier control</tspan></text>
+<rect x="1090" y="674" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="674" width="335.0" height="27" rx="4" class="bar reference"/>
+<text x="1530" y="694" text-anchor="end" class="value">100.0%</text>
+<text x="1090" y="718" class="detail">frontier ceiling · unranked</text>
+<text x="70" y="776" class="panel">Workflow Orchestration</text>
+<text x="70" y="805" class="sub">Semantic pass rate · 64 trials</text>
+<text x="70" y="857" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Qwen3.6 35B-A3B</tspan></text>
+<rect x="325" y="838" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="838" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="858" text-anchor="end" class="value">100.0%</text>
+<text x="325" y="882" class="detail">green · active control</text>
+<text x="70" y="914" class="label"><tspan class="rank">#2</tspan><tspan dx="8">Qwen3.6 35B NVFP4-Fast</tspan></text>
+<rect x="325" y="895" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="895" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="915" text-anchor="end" class="value">100.0%</text>
+<text x="325" y="939" class="detail">green · report-only</text>
+<text x="70" y="971" class="label"><tspan class="rank">#3</tspan><tspan dx="8">Ministral 14B</tspan></text>
+<rect x="325" y="952" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="952" width="293.1" height="27" rx="4" class="bar yellow"/>
+<text x="765" y="972" text-anchor="end" class="value">87.5%</text>
+<text x="325" y="996" class="detail">yellow · needs hardening</text>
+<text x="70" y="1028" class="label"><tspan class="rank">#4</tspan><tspan dx="8">Nemotron 30B</tspan></text>
+<rect x="325" y="1009" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1009" width="193.7" height="27" rx="4" class="bar yellow"/>
+<text x="765" y="1029" text-anchor="end" class="value">57.8%</text>
+<text x="325" y="1053" class="detail">yellow · needs hardening</text>
+<text x="70" y="1085" class="label"><tspan class="rank">Ref</tspan><tspan dx="8">Frontier control</tspan></text>
+<rect x="325" y="1066" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1066" width="335.0" height="27" rx="4" class="bar reference"/>
+<text x="765" y="1086" text-anchor="end" class="value">100.0%</text>
+<text x="325" y="1110" class="detail">frontier ceiling · unranked</text>
+<text x="835" y="776" class="panel">General Operations</text>
+<text x="835" y="805" class="sub">Semantic role gate</text>
+<text x="835" y="857" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Ornith 9B</tspan></text>
+<rect x="1090" y="838" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="838" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="858" text-anchor="end" class="value">100.0%</text>
+<text x="1090" y="882" class="detail">green · active control</text>
+<line x1="70" y1="1183" x2="1530" y2="1183" class="rule"/>
+<text x="70" y="1248" class="section">Public 22-check field-test throughput</text>
+<text x="70" y="1280" class="sub">Successful completion tokens per second at concurrency 1. Host rankings stay separate.</text>
+<text x="70" y="1338" class="panel">Mac Studio</text>
+<text x="70" y="1367" class="sub">GGUF Q4_K_M · llama.cpp</text>
+<text x="70" y="1419" class="label"><tspan class="rank">#6</tspan><tspan dx="8">Ornith 35B</tspan></text>
+<rect x="325" y="1400" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1400" width="335.0" height="27" rx="4" class="bar yellow"/>
+<text x="765" y="1420" text-anchor="end" class="value">81.4</text>
+<text x="325" y="1444" class="detail">quality 18/22 · Q4_K_M</text>
+<text x="70" y="1476" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Qwen3.6 35B-A3B</tspan></text>
+<rect x="325" y="1457" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1457" width="316.9" height="27" rx="4" class="bar green"/>
+<text x="765" y="1477" text-anchor="end" class="value">77.0</text>
+<text x="325" y="1501" class="detail">quality 22/22 · Q4_K_M</text>
+<text x="70" y="1533" class="label"><tspan class="rank">#2</tspan><tspan dx="8">Ornith 9B</tspan></text>
+<rect x="325" y="1514" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1514" width="307.7" height="27" rx="4" class="bar green"/>
+<text x="765" y="1534" text-anchor="end" class="value">74.8</text>
+<text x="325" y="1558" class="detail">quality 22/22 · Q4_K_M</text>
+<text x="70" y="1590" class="label"><tspan class="rank">#3</tspan><tspan dx="8">Qwen3-Coder-Next</tspan></text>
+<rect x="325" y="1571" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1571" width="240.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="1591" text-anchor="end" class="value">58.3</text>
+<text x="325" y="1615" class="detail">quality 22/22 · Q4_K_M</text>
+<text x="70" y="1647" class="label"><tspan class="rank">#4</tspan><tspan dx="8">Gemma 4 12B</tspan></text>
+<rect x="325" y="1628" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1628" width="221.1" height="27" rx="4" class="bar green"/>
+<text x="765" y="1648" text-anchor="end" class="value">53.7</text>
+<text x="325" y="1672" class="detail">quality 22/22 · Q4_K_M</text>
+<text x="70" y="1704" class="label"><tspan class="rank">#5</tspan><tspan dx="8">Qwen3.6 27B</tspan></text>
+<rect x="325" y="1685" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1685" width="111.8" height="27" rx="4" class="bar green"/>
+<text x="765" y="1705" text-anchor="end" class="value">27.2</text>
+<text x="325" y="1729" class="detail">quality 22/22 · Q4_K_M</text>
+<text x="835" y="1338" class="panel">DGX Spark</text>
+<text x="835" y="1367" class="sub">NVFP4 · vLLM</text>
+<text x="835" y="1419" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Qwen3.6 35B NVFP4-Fast</tspan></text>
+<rect x="1090" y="1400" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="1400" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="1420" text-anchor="end" class="value">58.3</text>
+<text x="1090" y="1444" class="detail">quality 22/22 · NVFP4-Fast</text>
+<text x="835" y="1476" class="label"><tspan class="rank">#2</tspan><tspan dx="8">Qwen3.6 35B NVFP4</tspan></text>
+<rect x="1090" y="1457" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="1457" width="256.5" height="27" rx="4" class="bar green"/>
+<text x="1530" y="1477" text-anchor="end" class="value">44.7</text>
+<text x="1090" y="1501" class="detail">quality 22/22 · NVFP4</text>
+<text x="835" y="1533" class="label"><tspan class="rank">#3</tspan><tspan dx="8">Qwen3.6 27B NVFP4</tspan></text>
+<rect x="1090" y="1514" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="1514" width="96.1" height="27" rx="4" class="bar green"/>
+<text x="1530" y="1534" text-anchor="end" class="value">16.7</text>
+<text x="1090" y="1558" class="detail">quality 22/22 · NVFP4</text>
+<line x1="70" y1="1797" x2="1530" y2="1797" class="rule"/>
+<text x="70" y="1862" class="section">Historical smoke evidence</text>
+<text x="70" y="1917" class="panel">Mac Studio smoke</text>
+<text x="70" y="1946" class="sub">Provisional checks · never a role rank</text>
+<text x="70" y="1998" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Qwen3.6 35B-A3B</tspan></text>
+<rect x="325" y="1979" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="1979" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="1999" text-anchor="end" class="value">6/6</text>
+<text x="70" y="2041" class="label"><tspan class="rank">#2</tspan><tspan dx="8">Qwen3.6 35B-A3B (Unsloth)</tspan></text>
+<rect x="325" y="2022" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="2022" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="2042" text-anchor="end" class="value">6/6</text>
+<text x="70" y="2084" class="label"><tspan class="rank">#3</tspan><tspan dx="8">Qwen3-Coder-Next (Unsloth)</tspan></text>
+<rect x="325" y="2065" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="2065" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="2085" text-anchor="end" class="value">6/6</text>
+<text x="70" y="2127" class="label"><tspan class="rank">#4</tspan><tspan dx="8">Qwen3.6 27B (Unsloth)</tspan></text>
+<rect x="325" y="2108" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="2108" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="765" y="2128" text-anchor="end" class="value">6/6</text>
+<text x="70" y="2170" class="label"><tspan class="rank">#5</tspan><tspan dx="8">Qwen3-Coder 30B</tspan></text>
+<rect x="325" y="2151" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="2151" width="279.2" height="27" rx="4" class="bar yellow"/>
+<text x="765" y="2171" text-anchor="end" class="value">5/6</text>
+<text x="70" y="2213" class="label"><tspan class="rank">#6</tspan><tspan dx="8">Gemma 4 12B (Unsloth)</tspan></text>
+<rect x="325" y="2194" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="2194" width="279.2" height="27" rx="4" class="bar yellow"/>
+<text x="765" y="2214" text-anchor="end" class="value">5/6</text>
+<text x="70" y="2256" class="label"><tspan class="rank">#7</tspan><tspan dx="8">Gemma 4 12B</tspan></text>
+<rect x="325" y="2237" width="335" height="27" rx="4" class="track"/>
+<rect x="325" y="2237" width="223.3" height="27" rx="4" class="bar yellow"/>
+<text x="765" y="2257" text-anchor="end" class="value">4/6</text>
+<text x="835" y="1917" class="panel">DGX smoke</text>
+<text x="835" y="1946" class="sub">Provisional checks · never a role rank</text>
+<text x="835" y="1998" class="label"><tspan class="rank">#1</tspan><tspan dx="8">Qwen3.6 35B NVFP4-Fast</tspan></text>
+<rect x="1090" y="1979" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="1979" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="1999" text-anchor="end" class="value">6/6</text>
+<text x="835" y="2041" class="label"><tspan class="rank">#2</tspan><tspan dx="8">Qwen3.6 35B NVFP4</tspan></text>
+<rect x="1090" y="2022" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="2022" width="335.0" height="27" rx="4" class="bar green"/>
+<text x="1530" y="2042" text-anchor="end" class="value">6/6</text>
+<text x="835" y="2084" class="label"><tspan class="rank">#3</tspan><tspan dx="8">Qwen3.6 27B NVFP4</tspan></text>
+<rect x="1090" y="2065" width="335" height="27" rx="4" class="track"/>
+<rect x="1090" y="2065" width="279.2" height="27" rx="4" class="bar yellow"/>
+<text x="1530" y="2085" text-anchor="end" class="value">5/6</text>
+<line x1="70" y1="2335" x2="1530" y2="2335" class="rule"/>
+<text x="70" y="2375" class="foot">Blue: full pass. Orange: hardening required. Gray: retired. Pale: frontier reference only.</text>
+<text x="70" y="2405" class="foot">22 serving artifacts · 193 semantic receipts · generated 2026-07-14 00:59 UTC</text>
+<text x="70" y="2435" class="foot">Source: hash-pinned Workman ranking receipts. No cross-family or cross-host rank.</text>
+</svg>
