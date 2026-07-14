@@ -31,6 +31,16 @@ Admission also reconciles every raw `(scenario_id, repeat)` identity against row
 
 See the [2026-07-11 adversarial audit remediation](docs/AUDIT_REMEDIATION_2026-07-11.md) for the corrected claims and remaining holds.
 
+## Operator role rankings
+
+The [2026-07-13 role-ranking update](results/verified/2026-07-13-role-rankings/) publishes sanitized aggregate results for four governed operator roles: Blog Factory, Code Repair, Loop Forge, and Workman Worker.
+
+![Local model role rankings and host-separated field-test evidence](docs/assets/local-model-role-rankings-2026-07-13.svg)
+
+These are not replacements for the public 22-check battery. Role batteries use private operational fixtures, so only aggregate scores, trial counts, statuses, and receipt hashes are public. Frontier controls remain unranked reference ceilings. Public throughput, role reliability, historical smoke evidence, and different hardware classes are deliberately kept separate.
+
+Qwen3.6 35B-A3B NVFP4-Fast passed all 208 role trials and repeated 208/208 in the first scheduled passive watchdog. It tied the current champions on semantic quality across all three large-model roles. No automatic production promotion was made.
+
 ## Run it
 
 Python 3.10 or newer. No runtime dependencies.

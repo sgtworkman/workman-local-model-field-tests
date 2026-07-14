@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.audit_public_repo import audit_files, tracked_files
+from scripts.audit_public_repo import audit_files, changed_worktree_paths, tracked_files
 
 
 class PublicAuditTests(unittest.TestCase):
@@ -26,6 +26,19 @@ class PublicAuditTests(unittest.TestCase):
             path.write_text(fixture_text, encoding="utf-8")
             findings = audit_files([path])
         self.assertEqual(len(findings), 4)
+
+    def test_binary_release_assets_are_skipped_without_decoding(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "chart.png"
+            path.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\xff" * 1024)
+            self.assertEqual(audit_files([path]), [])
+
+    def test_untracked_release_candidates_are_worktree_changes(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1]) as temp:
+            path = Path(temp) / "candidate.txt"
+            path.write_text("safe fixture", encoding="utf-8")
+            changed_worktree_paths.cache_clear()
+            self.assertIn(str(path.relative_to(Path(__file__).resolve().parents[1])), changed_worktree_paths())
 
 
 if __name__ == "__main__":
