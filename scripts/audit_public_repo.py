@@ -47,7 +47,7 @@ def tracked_files() -> list[Path]:
 def changed_worktree_paths() -> set[str]:
     try:
         output = subprocess.check_output(
-            ["git", "status", "--porcelain", "-z"],
+            ["git", "status", "--porcelain", "--untracked-files=all", "-z"],
             cwd=ROOT,
         )
     except subprocess.CalledProcessError:
