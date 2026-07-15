@@ -67,6 +67,16 @@ Streaming artifacts created before harness v0.2.1 used total completion tokens i
 
 Every v2 quality artifact must contain exactly one row per `(scenario_id, repeat)` identity. Admission rejects duplicate identities, missing rows, and summary totals, pass counts, or pass rates that do not reconcile to raw rows. Temperature-zero repeats are timing samples and never multiply the number of independent quality checks.
 
+## Runtime safety preflight
+
+Unified-memory systems must preserve both accelerator-free and host-available memory margins before a temporary runtime starts. Checking only the accelerator reservation can admit a launch that later stalls the API process under host-memory pressure. `workman_field_tests.runtime_safety.evaluate_memory_reservation` implements the public fail-closed calculation.
+
+Explicitly forced inference backends require a verified activation/backend pairing. Prefer runtime backend selection (`auto`) when the pairing is not proven. Unknown forced backends fail closed.
+
+For thinking models, the uncontrolled OpenAI-compatible adapter is diagnostic: it establishes route identity but may expose reasoning or consume its small output budget before visible content. Admission requires both the no-think and strict JSON-schema controlled profiles to return non-empty, route-correct output without reasoning leakage.
+
+File-backed scorer modules should be loaded with their source directory temporarily available for sibling imports. Missing sources or module specifications are hard failures, not zero-quality model results.
+
 ## Limits
 
 This is a field test. It is not MMLU, HumanEval, or a universal intelligence score. The battery is intentionally small enough to inspect every failure.
