@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1320" viewBox="0 0 1900 1320">
+<rect width="1900" height="1320" fill="#FFFFFF"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#161A20}.title{font-size:47px;font-weight:760}.deck{font-size:20px;fill:#4E5662}.category{font-size:31px;font-weight:740}.panel{font-size:20px;font-weight:720}.columns{font-size:13px;fill:#737B86}.rank{font-size:15px;fill:#8B929C}.model{font-size:16px;font-weight:560}.winner{font-size:11px;font-weight:780;letter-spacing:.5px}.metrics{font-size:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;fill:#313945}.legend{font-size:15px;fill:#555E6A}.foot{font-size:14px;fill:#68717D}</style>
+<text x="54" y="68" class="title">Large Local Model Role Benchmarks</text>
+<text x="54" y="105" class="deck">Quality first · reliability next · median task time breaks exact quality ties · hardware ranked separately</text>
+<rect x="1430" y="54" width="22" height="14" rx="3" fill="#24A85A"/>
+<text x="1460" y="67" class="legend">qualified winner</text>
+<rect x="1620" y="54" width="22" height="14" rx="3" fill="#D9DDE2"/>
+<text x="1650" y="67" class="legend">tested candidate</text>
+<line x1="54" y1="132" x2="1846" y2="132" stroke="#C9CED5" stroke-width="1"/>
+<text x="54" y="180" class="category">General Instruction Following</text>
+<text x="1846" y="180" text-anchor="end" class="columns">Aggregate role battery · sanitized evidence</text>
+<line x1="54" y1="197" x2="1846" y2="197" stroke="#D7DBE0" stroke-width="1"/>
+<text x="54" y="236" class="panel">Apple Silicon 96 GB</text>
+<text x="894" y="236" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="54" y="293" class="rank">1.</text>
+<text x="82" y="293" class="model">Qwen3.6 35B-A3B Q4_K_M</text>
+<rect x="349" y="274" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="274" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="359" y="293" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="669" y="293" class="metrics">100.0 · 100.0 · 0 · 70.7 · 1.29</text>
+<text x="54" y="340" class="rank">2.</text>
+<text x="82" y="340" class="model">Bonsai 27B Ternary Q2_0</text>
+<rect x="349" y="321" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="321" width="305.0" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="340" class="metrics">100.0 · 100.0 · 0 · 38.4 · 2.90</text>
+<text x="54" y="387" class="rank">3.</text>
+<text x="82" y="387" class="model">Bonsai 27B Binary Q1_0</text>
+<rect x="349" y="368" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="368" width="271.1" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="387" class="metrics">88.9 · 88.9 · 8 · 49.5 · 2.23</text>
+<text x="1005" y="236" class="panel">NVIDIA DGX Spark 128 GB</text>
+<text x="1845" y="236" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="1005" y="293" class="rank">1.</text>
+<text x="1033" y="293" class="model">Qwen3.6 35B-A3B NVFP4 Fast</text>
+<rect x="1300" y="274" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="274" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="1310" y="293" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="1620" y="293" class="metrics">100.0 · 100.0 · 0 · 77.2 · 1.10</text>
+<text x="1005" y="340" class="rank">2.</text>
+<text x="1033" y="340" class="model">Qwen3.6 27B NVFP4</text>
+<rect x="1300" y="321" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="321" width="305.0" height="27" rx="4" fill="#D9DDE2"/>
+<text x="1620" y="340" class="metrics">100.0 · 100.0 · 0 · 21.7 · 3.61</text>
+<line x1="950" y1="225" x2="950" y2="402" stroke="#E1E4E8" stroke-width="1"/>
+<text x="54" y="453" class="category">Code and Debugging</text>
+<text x="1846" y="453" text-anchor="end" class="columns">Aggregate role battery · sanitized evidence</text>
+<line x1="54" y1="470" x2="1846" y2="470" stroke="#D7DBE0" stroke-width="1"/>
+<text x="54" y="509" class="panel">Apple Silicon 96 GB</text>
+<text x="894" y="509" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="54" y="566" class="rank">1.</text>
+<text x="82" y="566" class="model">Qwen3.6 27B Q4_K_M</text>
+<rect x="349" y="547" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="547" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="359" y="566" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="669" y="566" class="metrics">100.0 · 100.0 · 0 · 17.8 · 5.77</text>
+<text x="54" y="613" class="rank">2.</text>
+<text x="82" y="613" class="model">Bonsai 27B Ternary Q2_0</text>
+<rect x="349" y="594" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="594" width="271.1" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="613" class="metrics">88.9 · 88.9 · 8 · 38.3 · 3.52</text>
+<text x="54" y="660" class="rank">3.</text>
+<text x="82" y="660" class="model">Bonsai 27B Binary Q1_0</text>
+<rect x="349" y="641" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="641" width="203.4" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="660" class="metrics">66.7 · 66.7 · 24 · 49.5 · 2.58</text>
+<text x="1005" y="509" class="panel">NVIDIA DGX Spark 128 GB</text>
+<text x="1845" y="509" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="1005" y="566" class="rank">1.</text>
+<text x="1033" y="566" class="model">Qwen3.6 27B NVFP4</text>
+<rect x="1300" y="547" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="547" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="1310" y="566" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="1620" y="566" class="metrics">100.0 · 100.0 · 0 · 22.0 · 5.13</text>
+<text x="1005" y="613" class="rank">2.</text>
+<text x="1033" y="613" class="model">Qwen3.6 35B-A3B NVFP4 Fast</text>
+<rect x="1300" y="594" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="594" width="300.7" height="27" rx="4" fill="#D9DDE2"/>
+<text x="1620" y="613" class="metrics">98.6 · 88.9 · 1 · 79.0 · 1.54</text>
+<line x1="950" y1="498" x2="950" y2="675" stroke="#E1E4E8" stroke-width="1"/>
+<text x="54" y="726" class="category">Reasoning and Planning</text>
+<text x="1846" y="726" text-anchor="end" class="columns">Aggregate role battery · sanitized evidence</text>
+<line x1="54" y1="743" x2="1846" y2="743" stroke="#D7DBE0" stroke-width="1"/>
+<text x="54" y="782" class="panel">Apple Silicon 96 GB</text>
+<text x="894" y="782" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="54" y="839" class="rank">1.</text>
+<text x="82" y="839" class="model">Qwen3.6 35B-A3B Q4_K_M</text>
+<rect x="349" y="820" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="820" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="359" y="839" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="669" y="839" class="metrics">100.0 · 100.0 · 0 · 84.3 · 1.25</text>
+<text x="54" y="886" class="rank">2.</text>
+<text x="82" y="886" class="model">Bonsai 27B Ternary Q2_0</text>
+<rect x="349" y="867" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="867" width="266.9" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="886" class="metrics">87.5 · 87.5 · 8 · 38.6 · 2.23</text>
+<text x="54" y="933" class="rank">3.</text>
+<text x="82" y="933" class="model">Bonsai 27B Binary Q1_0</text>
+<rect x="349" y="914" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="914" width="114.4" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="933" class="metrics">37.5 · 37.5 · 40 · 49.8 · 1.65</text>
+<text x="1005" y="782" class="panel">NVIDIA DGX Spark 128 GB</text>
+<text x="1845" y="782" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="1005" y="839" class="rank">1.</text>
+<text x="1033" y="839" class="model">Qwen3.6 35B-A3B NVFP4 Fast</text>
+<rect x="1300" y="820" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="820" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="1310" y="839" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="1620" y="839" class="metrics">100.0 · 100.0 · 0 · 74.9 · 1.13</text>
+<text x="1005" y="886" class="rank">2.</text>
+<text x="1033" y="886" class="model">Qwen3.6 27B NVFP4</text>
+<rect x="1300" y="867" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="867" width="305.0" height="27" rx="4" fill="#D9DDE2"/>
+<text x="1620" y="886" class="metrics">100.0 · 100.0 · 0 · 21.2 · 3.72</text>
+<line x1="950" y1="771" x2="950" y2="948" stroke="#E1E4E8" stroke-width="1"/>
+<text x="54" y="999" class="category">Batch Processing</text>
+<text x="1846" y="999" text-anchor="end" class="columns">Aggregate role battery · sanitized evidence</text>
+<line x1="54" y1="1016" x2="1846" y2="1016" stroke="#D7DBE0" stroke-width="1"/>
+<text x="54" y="1055" class="panel">Apple Silicon 96 GB</text>
+<text x="894" y="1055" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="54" y="1112" class="rank">1.</text>
+<text x="82" y="1112" class="model">Qwen3.6 35B-A3B Q4_K_M</text>
+<rect x="349" y="1093" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="1093" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="359" y="1112" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="669" y="1112" class="metrics">100.0 · 100.0 · 0 · 74.6 · 1.89</text>
+<text x="54" y="1159" class="rank">2.</text>
+<text x="82" y="1159" class="model">Bonsai 27B Binary Q1_0</text>
+<rect x="349" y="1140" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="1140" width="305.0" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="1159" class="metrics">100.0 · 100.0 · 0 · 49.5 · 2.92</text>
+<text x="54" y="1206" class="rank">3.</text>
+<text x="82" y="1206" class="model">Bonsai 27B Ternary Q2_0</text>
+<rect x="349" y="1187" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="349" y="1187" width="305.0" height="27" rx="4" fill="#D9DDE2"/>
+<text x="669" y="1206" class="metrics">100.0 · 100.0 · 0 · 38.3 · 3.80</text>
+<text x="1005" y="1055" class="panel">NVIDIA DGX Spark 128 GB</text>
+<text x="1845" y="1055" text-anchor="end" class="columns">Score · P^N · Crit · tok/s · sec</text>
+<text x="1005" y="1112" class="rank">1.</text>
+<text x="1033" y="1112" class="model">Qwen3.6 35B-A3B NVFP4 Fast</text>
+<rect x="1300" y="1093" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="1093" width="305.0" height="27" rx="4" fill="#24A85A"/>
+<text x="1310" y="1112" class="winner" fill="#FFFFFF">WINNER</text>
+<text x="1620" y="1112" class="metrics">100.0 · 100.0 · 0 · 91.1 · 1.54</text>
+<text x="1005" y="1159" class="rank">2.</text>
+<text x="1033" y="1159" class="model">Qwen3.6 27B NVFP4</text>
+<rect x="1300" y="1140" width="305" height="27" rx="4" fill="#EEF0F3"/>
+<rect x="1300" y="1140" width="305.0" height="27" rx="4" fill="#D9DDE2"/>
+<text x="1620" y="1159" class="metrics">100.0 · 100.0 · 0 · 25.7 · 5.44</text>
+<line x1="950" y1="1044" x2="950" y2="1221" stroke="#E1E4E8" stroke-width="1"/>
+<line x1="54" y1="1260" x2="1846" y2="1260" stroke="#C9CED5" stroke-width="1"/>
+<text x="54" y="1290" class="foot">Score and P^N are percentages. Crit = critical failures. tok/s = measured output throughput. sec = median full-task completion time.</text>
+<text x="1846" y="1290" text-anchor="end" class="foot">20 candidates · 4 task categories · evidence frozen 2026-07-19</text>
+</svg>

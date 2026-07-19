@@ -31,6 +31,16 @@ Admission also reconciles every raw `(scenario_id, repeat)` identity against row
 
 See the [2026-07-11 adversarial audit remediation](docs/AUDIT_REMEDIATION_2026-07-11.md) for the corrected claims and remaining holds.
 
+## Current category rankings
+
+The [2026-07-19 category release](results/verified/2026-07-19-category-rankings/) compares large local models across General Instruction Following, Code and Debugging, Reasoning and Planning, and Batch Processing.
+
+![Large local-model category rankings](docs/assets/local-model-category-rankings-2026-07-19.svg)
+
+Every panel is ranked independently by hardware. Quality comes first, then Pass^N reliability and critical failures; median task completion time breaks exact quality ties. A faster model does not win by outrunning a quality deficit.
+
+The release contains sanitized aggregates only. Private fixtures, internal task names, active assignments, routes, and machine identities are not published. The separate [winner-assignment policy](docs/WINNER_ASSIGNMENT_POLICY.md) explains how a measured winner becomes a controlled live assignment without confusing “tested,” “qualified,” “assigned,” and “live.”
+
 ## Operator role rankings
 
 The [2026-07-13 role-ranking update](results/verified/2026-07-13-role-rankings/) publishes sanitized aggregate results for four governed operator roles: Structured Publishing, Code Repair, Workflow Orchestration, and General Operations.
