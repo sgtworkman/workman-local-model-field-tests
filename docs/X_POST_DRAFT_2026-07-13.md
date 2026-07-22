@@ -1,24 +1,25 @@
-# X post draft — operator role rankings
+# X publication receipt — operator role rankings
 
-Attach: [`docs/assets/local-model-role-rankings-2026-07-13.png`](assets/local-model-role-rankings-2026-07-13.png)
+Status: `PUBLISHED`
 
-Fast is easy to benchmark.
+- Published: `2026-07-14T04:36:20Z`
+- Account: [`@workmanfirearms`](https://x.com/workmanfirearms)
+- Live post: <https://x.com/workmanfirearms/status/2076888501350445221>
+- Source chart: [`docs/assets/local-model-role-rankings-2026-07-13.png`](assets/local-model-role-rankings-2026-07-13.png)
+- X media ID: `2076888491179352064`
 
-Reliable is harder.
+## Published copy
 
-Qwen3.6 35B NVFP4-Fast went 208/208 across structured publishing, code repair, and workflow orchestration.
+Fast is easy to benchmark. Reliable is harder.
 
-Then it went 208/208 again in the first passive watchdog.
+Qwen3.6 35B NVFP4-Fast passed 208/208 across publishing, code repair, and workflow orchestration—then repeated 208/208 in its first passive watchdog.
 
-It tied every current role control on semantic quality. We reran the controls live. They passed too.
-
-Still no automatic promotion.
-
-Role reliability, public quality, host-specific speed, and smoke evidence stay separate.
+No automatic promotion.
 
 Rank last. Proof first.
 
-Results and methodology:
-https://github.com/sgtworkman/workman-local-model-field-tests/tree/main/results/verified/2026-07-13-role-rankings
+https://github.com/sgtworkman/workman-local-model-field-tests
 
-Status: `DRAFT / NOT PUBLISHED`
+## Verification
+
+The canonical post URL, author, timestamp, text, and attached media ID were checked against public X post metadata on `2026-07-14`.
