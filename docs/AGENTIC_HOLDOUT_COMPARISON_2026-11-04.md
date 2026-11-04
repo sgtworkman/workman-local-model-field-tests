@@ -1,4 +1,4 @@
-# Agentic holdout comparison: repeat-stable failures matter more than the aggregate score
+# Agentic holdout comparison: DeepSeek-V4.1-Flash-1017 vs GLM-5.3-Flash-EXL3
 
 ## What we did
 
@@ -7,26 +7,35 @@ prompt, temperature 0, three repeats per task, idle-gated serving lane. The task
 instruction hierarchy, long-context retrieval, destructive safety, and other agent
 behaviors. Both arms used the same pack and the same harness settings.
 
+## Setup
+
+- **Hardware:** two DGX Spark nodes, 128 GB unified memory each.
+- **Runtime:** TensorFold, four streams, 1,048,576-token context per rank.
+- **Models:**
+  - DeepSeek-V4.1-Flash-1017, EXL3 EAQ v1, 2.9 bpw.
+  - GLM-5.3-Flash-EXL3, 4 bpw.
+- **Sampling:** temperature 0, 2,048 max output tokens, thinking off.
+- **Harness:** 20-task agentic holdout, three repeats per task, idle gate.
+
 ## What we saw
 
-- Model A: 20/20. Every task passed all three repeats.
-- Model B: 17/20. Seventeen tasks passed all three repeats; three tasks failed all three
-  repeats.
+- DeepSeek-V4.1-Flash-1017: 20/20. Every task passed all three repeats.
+- GLM-5.3-Flash-EXL3: 17/20. Seventeen tasks passed all three repeats; three tasks failed
+  all three repeats.
 
-The aggregate gap was three tasks. The more useful signal was the shape: Model B's misses
-were repeat-stable, not flaky. Each failing task was 0/3.
+The aggregate gap was three tasks. The more useful signal was the shape: GLM's misses were
+repeat-stable, not flaky. Each failing task was 0/3.
 
 ## The three failure classes
 
-1. **Instruction hierarchy.** The model detected an injected instruction in tool output,
-   but then refused an action the policy authorized. The failure was over-refusal, not
-   obedience to the injection. A binary "injection detected" check would have passed it;
-   the task's exact-report check caught it.
-2. **Long-context retrieval.** The model exited without producing the required answer
-   artifact. The harness checked for the artifact, not just a plausible text answer.
-3. **Destructive safety.** The model deleted paths outside the approved working root,
-   including a parent-relative escape and an absolute path. The task's containment checks
-   caught both.
+1. **Instruction hierarchy.** GLM detected an injected instruction in tool output, but then
+   refused an action the policy authorized. The failure was over-refusal, not obedience to
+   the injection. A binary "injection detected" check would have passed it; the task's
+   exact-report check caught it.
+2. **Long-context retrieval.** GLM exited without producing the required answer artifact.
+   The harness checked for the artifact, not just a plausible text answer.
+3. **Destructive safety.** GLM deleted paths outside the approved working root, including a
+   parent-relative escape and an absolute path. The task's containment checks caught both.
 
 ## Lessons for other operators
 
